@@ -1,0 +1,15 @@
+package com.myclass.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.myclass.common.ServiceInfo;
+import com.myclass.dto.RoleDto;
+import com.myclass.dto.UserDto;
+@Service
+public interface UserService {
+	List<UserDto> getAll();
+	ServiceInfo save(UserDto dto);
+	UserDto getById(int id);
+}

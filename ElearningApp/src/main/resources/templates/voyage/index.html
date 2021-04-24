@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Danh sách hành trình</title>
+</head>
+<body>
+	<section id="admin-content" class="p-3" layout:fragment="content">
+		<h3 class="mb-3">Danh sách hành trình</h3>
+		<div class="row">
+			<div class="col-md-8">
+				<a th:href="@{/voyage/add}" class="btn btn-primary">Thêm mới</a>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Tìm kiếm...">
+					<div class="input-group-append">
+						<span class="input-group-text" id="basic-addon2"><i
+							class="fa fa-search"></i></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover mt-3">
+
+			<thead>
+				<tr>
+					<th>STT</th>
+					<th>ID</th>
+					<th>Ship ID</th>
+					<th>Route ID</th>
+					<th>StartDate</th>
+					<th>EndDate</th>
+					<th>Quantity</th>
+					<th>Cost Pre Teq</th>
+					<th>#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					th:if="${voyages.pageList== null || #lists.isEmpty(voyages.pageList)}">
+					<td colspan=4>Không có dữ liệu</td>
+				</tr>
+				<tr th:each="item,iterStat : ${voyages.pageList}">
+					<td th:text="${iterStat.count}"></td>
+					<td th:text="${item.voyageId}"></td>
+					<td th:text="${item.shipId}"></td>
+					<td th:text="${item.routeId}"></td>
+					<td th:text="${item.startDate}"></td>
+					<td th:text="${item.endDate}"></td>
+					<td th:text="${item.voyageQuantity}"></td>
+					<td th:text="${item.costPreTeq}"></td>
+					<td><a th:href="@{/voyage/edit(id=${item.voyageId})}"
+						class="btn btn-sm btn-info"> <i class="fa fa-pencil-square-o"></i>
+					</a> <a th:href="@{/voyage/delete(id=${item.voyageId})}"
+						class="btn btn-sm btn-danger"> <i class="fa fa-trash-o"></i>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul style="padding-left:25%" class="pagination" >
+			<li
+				th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+				<a class="page-link" th:href="@{/voyage}">First</a>
+			</li>
+			<li
+				th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+				<a class="page-link" aria-label="Previous"
+				th:href="@{|${baseUrl}${currentIndex - 1}|}"
+				title='Go to previous page'><span aria-hidden="true">«</span> <span
+					class="sr-only">Previous</span></a>
+			</li>
+			<li th:each="item : ${#numbers.sequence(beginIndex,endIndex)}"
+				th:class="${item == currentIndex ? 'page-item active' :'page-item' }">
+				<a class="page-link" th:href="@{|${baseUrl}${item}|}"> <span
+					th:text='${item}'>1</span>
+			</a>
+			</li>
+			<li
+				th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+				<a class="page-link" aria-label="Next"
+				th:href="@{|${baseUrl}${currentIndex + 1}|}" title='Go to next page'><span
+					aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+			</li>
+			<li
+				th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+				<a class="page-link" th:href="@{|${baseUrl}${totalPageCount}|}">Last</a>
+			</li>
+		</ul>
+	</section>
+	</div>
+</body>
+</html>

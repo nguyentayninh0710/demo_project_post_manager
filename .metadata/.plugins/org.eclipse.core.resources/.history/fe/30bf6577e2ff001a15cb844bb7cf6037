@@ -1,0 +1,32 @@
+package com.myclass.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.myclass.dto.UserDto;
+import com.myclass.entity.Role;
+import com.myclass.entity.User;
+import com.myclass.repository.UserRepository;
+import com.myclass.service.UserService;
+@Service
+public class UserServiceImpl implements UserService {
+	@Autowired
+	private UserRepository userRepository;
+	public List<UserDto> getAll() {
+		List<UserDto> dtos = new ArrayList<UserDto>();
+		List<User> users = userRepository.findAll();
+		for (User user : users) {
+			dtos.add(new UserDto(user.getId(), 
+					user.getEmail(), 
+					user.getPassword(), 
+					user.getFullname(), 
+					user.getAvatar(),
+					user.getRole_id() ));
+		}
+		return dtos;
+	}
+
+}

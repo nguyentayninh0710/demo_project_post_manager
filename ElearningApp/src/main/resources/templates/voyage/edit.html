@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Cập nhật</title>
+</head>
+<body>
+	<section id="admin-content" class="p-3" layout:fragment="content">
+		<h3 class="mb-4 text-center">Cập nhật hành trình</h3>
+		<form method="post" th:action="@{/voyage/edit}" th:object="${voyage}">
+			<div class="row">
+				<div class="col-md-6 m-auto">
+					<div class="form-group">
+						<input type="hidden" th:field="*{voyageId}" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Ship ID</label> <input type="text" th:field="*{shipId}"
+							class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Route ID</label> <input type="text" th:field="*{routeId}"
+							class="form-control"/>
+					</div>
+					<div class="form-group">
+						<label>Start Date</label> <input type="text" th:field="*{startDate}"
+							class="form-control"/>
+					</div>
+					<div class="form-group">
+						<label>End Date</label> <input type="text" th:field="*{endDate}"
+							class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Quantity</label> <input type="text" th:field="*{voyageQuantity}"
+							class="form-control"/>
+					</div>
+					<div class="form-group">
+						<label>Cost Pre Teq</label> <input type="text" th:field="*{costPreTeq}"
+							class="form-control"/>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Lưu lại</button>
+						<a class="btn btn-secondary" th:href="@{/voyage}">Quay lại</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+</html>

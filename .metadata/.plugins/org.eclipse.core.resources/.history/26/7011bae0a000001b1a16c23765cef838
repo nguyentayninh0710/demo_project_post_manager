@@ -1,0 +1,68 @@
+package com.myclass.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.myclass.entity.Role;
+import com.myclass.entity.User;
+import com.myclass.repository.RoleRepository;
+import com.myclass.repository.UserRepository;
+
+
+@Controller
+@RequestMapping("user")
+public class UserController {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String index(ModelMap model) {
+		List<User> users =  userRepository.findAll();
+		model.addAttribute("users", users);
+		return "user/index";
+	}
+	@RequestMapping(value = "add", method = RequestMethod.GET)
+	public String add(ModelMap model) {
+		User user = new User();
+		List<Role> role = roleRepository.findAll();
+		model.addAttribute("user", user);
+		model.addAttribute("roles", role);
+		return "user/add";
+	}
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	public String add(@ModelAttribute("user") User user) {
+
+		userRepository.save(user);
+		return "redirect:/user";
+	}
+	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	public String edit(ModelMap model, @RequestParam("id") int id) {
+		List<Role> role = roleRepository.findAll();
+		User user = userRepository.findById(id).get();
+		model.addAttribute("user", user);
+		model.addAttribute("roles", role);
+		return "user/edit";
+	}
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	public String edit(@ModelAttribute("user") User user) {
+
+		userRepository.save(user);
+		return "redirect:/user";
+	}
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	public String delete(ModelMap model, @RequestParam("id") int id) {
+		userRepository.deleteById(id);;
+		return "redirect:/user";
+	}
+}

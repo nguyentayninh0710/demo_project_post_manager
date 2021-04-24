@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<meta charset="UTF-8">
+<title>Add ship</title>
+</head>
+<body>
+	<section id="admin-content" class="p-3" layout:fragment="content">
+		<h3 class="mb-4 text-center">Thêm mới tàu</h3>
+		<p class="text-center" th:text=${message}></p>
+		<form method="post" th:action="@{/ship/add}" th:object="${ship}">
+			<div class="row">
+				<div class="col-md-6 m-auto">	
+					<div class="form-group">
+						<label>ID</label> <input type="text" th:field="*{shipId}"
+							class="form-control" placeholder="id" />
+					</div>			
+					<div class="form-group">
+						<label>Tên tàu</label> <input type="text" th:field="*{name}"
+							class="form-control" placeholder="name" />
+					</div>								
+					<div class="form-group">
+						<label>Sức chứa</label> <input type="text" th:field="*{capacity}"
+							class="form-control" placeholder="name" />
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Lưu lại</button>
+						<a class="btn btn-secondary" th:href="@{/ship}">Quay lại</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+</html>
